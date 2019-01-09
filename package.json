@@ -6,10 +6,14 @@
   "author": "suwei",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development",
+    "start": "node server/server.js",
     "transpile": "babel src -d dist --copy-files",
     "prepublishOnly": "npm run transpile",
-    "build": "webpack --mode production",
+    "build:web": "webpack --config build/webpack.web.js",
+    "build:server": "webpack --config build/webpack.server.js",
+    "build": "npm run clean && npm run build:web && npm run build:server",
+    "clean": "rimraf dist/",
+    "lint": "eslint --ext .js src",
     "deploy": "gh-pages -d examples/dist",
     "publish-demo": "npm run build && npm run deploy"
   },
@@ -26,13 +30,26 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^2.1.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.0",
     "gh-pages": "^2.0.1",
     "html-webpack-plugin": "^3.2.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-hot-loader": "^4.5.3",
     "style-loader": "^0.23.1",
+    "undefined": "^0.1.0",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0",
     "webpack-dev-server": "^3.1.14"
+  },
+  "dependencies": {
+    "eslint-loader": "^2.1.1",
+    "express": "^4.16.4",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "rimraf": "^2.6.3"
   }
 }
